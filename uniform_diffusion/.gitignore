@@ -1,0 +1,35 @@
+# Virtual environments
+.venv/
+env/
+venv/
+
+# Data
+data/
+
+# Pretrained weights from original paper
+files/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Jupyter checkpoints
+.ipynb_checkpoints/
+
+# Experiment outputs and logs
+*_out.ipynb
+results_log*.csv
+intermediate_discrete_results/
+intermediate_graph5_results/
+imgs_results_discrete/
+imgs_results_graph/
+imgs_results_graph5/
+*.png
+*.out
+
+# IDE and system
+.vscode/
+.claude/
+.DS_Store
+Thumbs.db
