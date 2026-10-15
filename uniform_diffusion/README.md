@@ -1,10 +1,10 @@
 # An Analytical Theory of Creativity in Discrete Diffusion Models — Uniform Diffusion Experiments
 
-This repository contains the code for the **D3PM-uniform diffusion experiments** presented in our NeurIPS 2026 submission.
+This folder contains the code for the **D3PM-uniform diffusion experiments** from our University of Amsterdam Deep Learning 2 group research project.
 
 ## Project Description
 
-We extend the locality-equivariance theory of creativity in diffusion models (Kamb & Ganguli, 2025) to discrete state spaces and graph-structured data. We derive an analytical Equivariant-Local Discrete Posterior (ELDP) and validate it experimentally using CNNs and GNNs on a locally consistent binary image task, under D3PM-uniform diffusion. For the masked diffusion experiments, see the companion repository.
+We extend the locality-equivariance theory of creativity in diffusion models (Kamb & Ganguli, 2025) to discrete state spaces and graph-structured data. We derive an analytical Equivariant-Local Discrete Posterior (ELDP) and validate it experimentally using CNNs and GNNs on a locally consistent binary image task, under D3PM-uniform diffusion. For the masked diffusion experiments, see [../masked_diffusion/README.md](../masked_diffusion/README.md).
 
 ## Repository Structure
 
@@ -44,7 +44,7 @@ pip install -r requirements.txt
 
 ## Running the Experiments
 
-Each experiment is self-contained in its notebook. Open the relevant notebook and run all cells in order. Training runs on CPU or GPU automatically. GPU is recommended for the full sweeps.
+Start Jupyter from `uniform_diffusion/`, so the CNN notebook can import the local `models.py` and `utils/`. Open the relevant notebook and run all cells in order. Training runs on CPU or GPU automatically. GPU is recommended for the full sweeps.
 
 ```bash
 jupyter notebook
@@ -58,3 +58,5 @@ Results are logged to CSV files and sample images are saved automatically.
 - The GNN uses a 4-connected grid graph (up, down, left, right) with periodic boundary conditions.
 - Local consistency violations are computed using a 3x3 majority-vote criterion.
 - All experiments use embedding dimension 256 and a cosine noise schedule.
+
+The CNN notebook retains an old `convolutional_diffusion` search path and markdown references to a 16×16 grid and 10-step sampling. Its current configuration uses a 24×24 grid and 3-step short sampling; running from this folder resolves the local model import.

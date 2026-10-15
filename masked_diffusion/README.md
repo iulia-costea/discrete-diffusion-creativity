@@ -1,10 +1,10 @@
 # An Analytical Theory of Creativity in Discrete Diffusion Models — Masked Diffusion Experiments
 
-This repository contains the code for the **masked diffusion experiments** presented in our NeurIPS 2026 submission.
+This folder contains the code for the **masked diffusion experiments** from our University of Amsterdam Deep Learning 2 group research project.
 
 ## Project Description
 
-We extend the locality-equivariance theory of creativity in diffusion models (Kamb & Ganguli, 2025) to discrete state spaces and graph-structured data. We derive an analytical Equivariant-Local Discrete Posterior (ELDP) and validate it experimentally using CNNs and GNNs on a locally consistent binary image task, under masked (absorbing) diffusion. For the D3PM-uniform diffusion experiments, see the companion repository.
+We extend the locality-equivariance theory of creativity in diffusion models (Kamb & Ganguli, 2025) to discrete state spaces and graph-structured data. We derive an analytical Equivariant-Local Discrete Posterior (ELDP) and validate it experimentally using CNNs and GNNs on a locally consistent binary image task, under masked (absorbing) diffusion. For the D3PM-uniform diffusion experiments, see [../uniform_diffusion/README.md](../uniform_diffusion/README.md).
 
 ## Repository Structure
 
@@ -59,21 +59,21 @@ Upload the relevant script from `colab_scripts/` and run:
 %run colab_discrete_diffusion.py
 ```
 
-Each script is self-contained. Models are saved to Google Drive automatically.
+The scripts include their model definitions. Check the paths near the top before running: the GNN and standalone MNIST training scripts mount Google Drive, while `colab_discrete_diffusion.py` saves to `/content/checkpoints/`. Evaluation scripts require existing checkpoints; `colab_r2_eval.py` defaults to `/content/mnist_cnn_L6_final.pt`.
 
 ### Snellius
-Run from the `convolutional_diffusion/` folder with the `dl2025` conda environment:
+The commands below describe the original cluster workflow, run from `convolutional_diffusion/`. They currently require `utils/data.py` and `utils/noise_schedules.py`, which are absent from this folder. The `dl2025` environment is cluster-specific and no environment definition is included. Use the Colab scripts above as the starting point for this checkout.
 
 ```bash
 conda activate dl2025
 
 # Train
-python discrete_training_script.py --dataset mnist --epochs 150 --layers 6 --homedir ./checkpoints
+python discrete_training_script.py --dataset mnist --epochs 150 --layers 6 --resnet --homedir ./checkpoints
 
 # Generate ELS samples
 python discrete_els_script.py --expname my_experiment --dataset mnist --numiters 100 --nsteps 20
 
-# Evaluate r²
+# Evaluate r² (replace model.pt with the actual saved model filename)
 python discrete_eval_script.py --exp_fname ./experiments/my_experiment/ --model_fname ./checkpoints/model.pt --dsname mnist
 ```
 
@@ -81,7 +81,7 @@ For GPU jobs, submit via `sbatch` using your existing job script.
 
 ## Notes
 
-- The CNN uses circular (toroidal) padding to match the periodic boundary conditions of the dataset.
+- The toy CNN uses circular (toroidal) padding. The modular training script defaults to zero padding; `--mode circular` selects periodic boundaries.
 - The GNN uses a 4-connected grid graph (up, down, left, right) without periodic boundary conditions.
 - Local consistency violations are computed using a 3x3 majority-vote criterion for CNN-GNN comparison, and additionally using a 4-connected criterion for the GNN to match its theoretical receptive field.
 - All experiments use embedding dimension 256 and a cosine noise schedule.

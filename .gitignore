@@ -1,0 +1,8 @@
+# Operating-system metadata
+.DS_Store
+Thumbs.db
+
+# Python and Jupyter caches
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
